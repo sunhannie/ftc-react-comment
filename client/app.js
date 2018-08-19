@@ -7,6 +7,9 @@ import {connect} from 'react-redux'
 
 import CommentInput from './components/commentInput/commentInput.js';
 
+import CommentOne from './components/commentOne/commentOne.js';
+
+import CommentList from './components/commentList/commentList.js';
 // import Overview from './components/overview/overview.js';
 // import Question from './components/question/question.js';
 
@@ -38,6 +41,8 @@ class App extends React.Component {
     return (
     	<div className="allcomments">
         <CommentInput/>
+        {/*<CommentOne />*/}
+        <CommentList />
       </div>
     );
   }
