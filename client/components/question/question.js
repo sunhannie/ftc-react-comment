@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Range from './range.js';
-import ColumnChart from './column-chart/column-chart.js';
+// import ColumnChart from './column-chart/column-chart.js';
 import questionCss from './question.scss';
 import {connect} from 'react-redux'
 import {rootReducer,markQuestion1,requestGet,fetchDataInGet,addCountAsync} from '../../reducers/question'
@@ -70,17 +70,7 @@ class Question extends Component {
     const crosshead = crossheadLookup[this.props.questionId];
 
 
-    const chart =  (
-      <ColumnChart
-        data={this.props.responsesData}
-        initialWidth={800}
-        inputMin={rangeMin}
-        inputMax={rangeMax}
-        userAnswer={this.state.value}
-        actualAnswer={this.props.answer}
-        countryAnswer={this.props.countryAnswer}
-      />
-    );
+
 
     return (
       <div  className="question-container" >
@@ -98,7 +88,6 @@ class Question extends Component {
         thumbSize={28}
         onSubmit={this.markQuestion}/>
 
-        {chart}
 
     {/*写法：变量字符串需要加上``，尽管前面有其它字符串*/}
         <div className={`reslut-container  ${this.state.answered ? 'active' : 'notActive'} `}>
