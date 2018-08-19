@@ -40,9 +40,10 @@ class App extends React.Component {
 
     return (
     	<div className="allcomments">
-        <CommentInput/>
+        
         {/*<CommentOne />*/}
         <CommentList />
+        <CommentInput/>
       </div>
     );
   }

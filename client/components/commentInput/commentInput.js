@@ -6,16 +6,9 @@ import PropTypes from 'prop-types';
 import commentInput from './commentInput.scss'
 
 class CommentInput extends Component {
-//   static propTypes = {
-//     comment: PropTypes.object.isRequired,
-//     onDeleteComment: PropTypes.func,
-//     index: PropTypes.number
-//   }
-
   constructor () {
     super()
     this.state = { content: '' }
-    // this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
   }
 
@@ -26,11 +19,7 @@ class CommentInput extends Component {
   componentWillUnmount () {
     
   }
-//   handleContentChange (event) {
-//     this.setState({
-//       content: event.target.value
-//     })
-//   }
+
 
   handleTextareaChange (event) {
     this.setState({
@@ -43,12 +32,12 @@ class CommentInput extends Component {
    
     return (
       
-      <div className="replybox" id="reFDW3jRbmFIw_eb">
-          <div id="reply-input-container">
-               <b>回复此评论：</b>
+      <div className="replybox">
+          <div className="reply-input-container">
+               <div>FT中文网欢迎读者发表评论，部分评论会被选进《读者有话说》栏目。我们保留编辑与出版的权利。</div>
                <textarea id="replycontent" className="commentTextArea" rows="3" onChange={this.handleTextareaChange.bind(this)}></textarea>
 
-                <div className="submint-section"><button className="comment_btn submitbutton button ui-light-btn" id="addnewcommentr" >提交回复</button></div>
+                <div className="submint-section"><button className="comment_btn submitbutton button ui-light-btn" id="addnewcommentr" >提交评论</button></div>
         </div>
     </div>
     )
