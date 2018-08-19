@@ -45,10 +45,8 @@ class Question extends Component {
 
 
  componentDidMount() {
-    this.props.dispatch(fetchDataInGet('中国')); //怎么能包含dispatch呢？ 
-    // const { dispatch, selectedSubreddit } = this.props;
-    // dispatch(fetchPostsIfNeeded(selectedSubreddit))
-    console.log({...this.props});  //props怎么会有dispatch
+    this.props.dispatch(fetchDataInGet('中国')); 
+    console.log({...this.props});  
   }
   render() {
      
@@ -87,9 +85,6 @@ class Question extends Component {
         step={rangeMax / 100}
         thumbSize={28}
         onSubmit={this.markQuestion}/>
-
-
-    {/*写法：变量字符串需要加上``，尽管前面有其它字符串*/}
         <div className={`reslut-container  ${this.state.answered ? 'active' : 'notActive'} `}>
           <div className="legend">
             <div className="actual-situation"><span className="circle"></span><span>实际情况</span></div>

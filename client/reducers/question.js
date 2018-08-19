@@ -22,7 +22,7 @@ export const reducer = (state, action) => {
         case ADD_QUESTION:
             return {questions: [...state, action.question1]}
         case MARK_QUESTION:
-        console.log(action.mark_question);//这里的值就是触发传过来的值，得到{answeredQ: false, valueQ: "50"}。我该怎么样把此处的值更新到页面中
+        // console.log(action.mark_question);//这里的值就是触发传过来的值，得到{answeredQ: false, valueQ: "50"}。我该怎么样把此处的值更新到页面中
             return {mark_question_data:action.mark_question}
         default:
         // 此处state是默认值，即为{}
@@ -39,7 +39,7 @@ export const reducer = (state, action) => {
 export const requestReducer = (state = { }, action) => {
   switch (action.type) {
     case REQUEST_GET:
-    console.log('action.request_get_data:'+action.request_get_data);
+    // console.log('action.request_get_data:'+action.request_get_data);
       return {
         ...state,
         request: 'request result'
@@ -52,14 +52,14 @@ export const requestReducer = (state = { }, action) => {
 }
 
 export function addCount() {
-    console.log('addCount execute');
+    // console.log('addCount execute');
   return {type: ADD_COUNT}
 }
  
 export function addCountAsync() {
-  console.log('addCountAsync execute');
+  // console.log('addCountAsync execute');
   return (dispatch,getState) => {
-    console.log('addCountAsync dispatch'); //触发在store.dipatch，这里才起作用（也就是thunk起作用）
+    // console.log('addCountAsync dispatch'); //触发在store.dipatch，这里才起作用（也就是thunk起作用）
     setTimeout( () => {
       dispatch(addCount())
     },2000)
