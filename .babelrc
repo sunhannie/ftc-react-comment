@@ -1,0 +1,31 @@
+{
+  "env": {
+    "development": {
+      "presets": ["env", "react"],
+      "plugins": [
+        "react-hot-loader/babel",
+        "transform-decorators-legacy"
+        
+      ]
+    },
+    "testing": {
+      "presets": ["env", "react"],
+      "plugins": [
+        "react-hot-loader/babel",
+        "transform-decorators-legacy"
+       
+      ]
+    },
+    "production": {
+      "presets": [
+        ["env"],
+        "react"
+      ],
+      "plugins": [
+        "transform-decorators-legacy"
+       
+      ]
+    }
+  }
+  
+}
