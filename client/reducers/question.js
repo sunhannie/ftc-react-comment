@@ -1,4 +1,4 @@
-const ADD_QUESTION = 'ADD_QUESTION';
+const ADD_COMMENT = 'ADD_COMMENT';
 const MARK_QUESTION = 'MARK_QUESTION';
 const REQUEST_GET = 'REQUEST_GET';
 
@@ -10,12 +10,12 @@ const reducer = (state={}, action) => {
     }
 
     switch(action.type){
-        case ADD_QUESTION:
-            return {questions: [...state, action.question1]}
+        case ADD_COMMENT:
+            return {questions: [...state, action.dataAdded]}
         case MARK_QUESTION:
             return {mark_question_data:action.mark_question}
         default:
-           let aClone = { ...{questions: [14]}  } ; 
+           let aClone = { ...{questions: 'default data'}  } ; 
             return ({
                 ...aClone,   
                 state   
@@ -28,12 +28,9 @@ const reducer = (state={}, action) => {
   switch (action.type) {
     case REQUEST_GET:
     //   console.log(action.request_data);
-      return {
-        request:'test request',
-        request_data: action.request_data
-      }
+      return action.request_data
     default:
-      return {...state}
+      return []
   }
 }
 
@@ -60,12 +57,14 @@ function requestComments(dispatch) {
 
       fetch(data,init)
       .then(res => res.json())
-      .then(( comments ) => {
-          return comments;
-        // dispatch(requestGet(comments))
+      .then(( comments ) => { 
+       return dispatch(requestGet(comments.result))
     });
    
   }
+export const addComment = (dataAdded) => {
+    return { type: ADD_COMMENT, dataAdded}
+}
 
 export const requestGet = (request_data) => {
     return { type: REQUEST_GET, request_data}
@@ -75,9 +74,9 @@ export const fetchDataInGet = data => (dispatch, getState)  => {
     return requestComments(dispatch);
 }
 
-// export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {
-//     return dispatch(fetchDataInGet(subreddit))   
-// }
+export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {
+    return dispatch(fetchDataInGet(subreddit))   
+}
 
 // export const fetchDataInGet = data => (dispatch, getState)  => {
 //     // dispatch(requestGet(data))  
@@ -90,7 +89,7 @@ export const fetchDataInGet = data => (dispatch, getState)  => {
 
 // 结合起来，返回一对象
 const rootReducer = combineReducers({
-//   reducer,
+  reducer,
   requestReducer
 })
 

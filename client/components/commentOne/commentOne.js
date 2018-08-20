@@ -34,21 +34,23 @@ class CommentOne extends Component {
 
 
   render () {
-    // console.log(this.state);
+    
+    const request = this.props.requestData;
+   
     return (
       
       <div className="commentcontainer">
           <div>
               <div className="ding"></div>
-              <span>08-16 16:14</span>
-              <b>minzhuziyou</b>
-              <font className="grey">来自山西省太原市</font>
+              <span>{request.dnewdate}</span>
+              <b>{request.nickname}</b>
+              <font className="grey">{request.user_area}</font>
          </div>
 
-         {/*<dd>在中共习近平执政下，别说140万亿，就是1400万亿家庭资产也无所谓。马克思主义是要消灭私有制的！习政府随时都可下令全部共产国有化！这些资产随时都可消失！这就是世纪工程混改！</dd>*/}
+         <dd>{request.talk}</dd>
 
 {/*逻辑是，评论有1条仅仅是dd中包含一句话，当有2条评论时，在p上加上class并在之前加上cmt_quote，它包含cmt_oldautherinfo；当有3条评论时，在cmt_oldautherinfo前加上*/}
-    <dd>
+    {/*<dd>
       <div className="cmt_quote">
         <div className="cmt_quote">
            	<div className="cmt_oldautherinfo">
@@ -62,7 +64,7 @@ class CommentOne extends Component {
         <p className="cmt_oldcmt">同感</p>
       </div>
       绝对赞同
-    </dd>
+    </dd>*/}
 
         <CommentReply/>
         <div className="replycomment">

@@ -5,7 +5,7 @@ import { createStore,applyMiddleware,compose} from 'redux'
 import { Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 
-import {requestReducer,rootReducer,fetchDataInGet} from './reducers/question'
+import {rootReducer,fetchDataInGet} from './reducers/question'
 import App from './app'  //不需要添加{}
 const middleware = [ thunk ];
 const enhancer = compose(

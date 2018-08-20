@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import {fetchDataInGet,requestGet} from '../../reducers/question'
+import {fetchPostsIfNeeded,fetchDataInGet,requestGet,addComment} from '../../reducers/question'
 
 import CommentOne from '../commentOne/commentOne.js'
 
@@ -13,30 +13,40 @@ class CommentList extends Component {
     this.state = { comments: '' }
   }
 
-  componentWillMount () {
-    var aa = this.props.dispatch(fetchDataInGet()); 
-    this._loadComments();
-    console.log('aa'+aa);
+  componentDidMount () {
+    this.props.dispatch(fetchDataInGet()); 
+    // this.props.addComment('add comment');
+    // this._loadComments();
+    console.log('aa');
   }
 
   componentWillUnmount () {
       
   }
    _loadComments () {
-      this.props.initComments();
+      // this.props.initComments();
   }
-
+  handleDeleteComment (index) {
+    // if (this.props.onDeleteComment) {
+    //   this.props.onDeleteComment(index)
+    // }
+  }
 
   render () {
     //  requestData={props.request_data}
  
-    const props = this.props;
-    console.log(props);//为什么会执行2遍？
+    const props = this.props.request_data;
+     console.log('request');//为什么会执行2遍？
     return (
         <div>
-        <CommentOne requestData={props}/>
-        <CommentOne requestData={props}/>
-        <CommentOne requestData={props}/>
+         {props.map((comment, i) =>
+          <CommentOne
+            requestData={props[i]}
+            key={i}
+            index={i}
+            onDeleteComment={this.handleDeleteComment.bind(this)} />
+        )}
+        {/*<CommentOne requestData={props}/>*/}
         </div>
     )
   }
@@ -54,8 +64,10 @@ const mapDispatchToProps = (dispatch, props) => {
     dispatch,
     initComments: () => {
       dispatch(requestGet())
+    },
+    addComment: (data) => {
+      dispatch(addComment(data))
     }
-
   }
 }
 
