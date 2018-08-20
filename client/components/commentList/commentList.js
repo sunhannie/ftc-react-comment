@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import {fetchPostsIfNeeded,fetchDataInGet,requestGet,addComment} from '../../reducers/question'
+import {fetchPostsIfNeeded,fetchDataInGet,requestGet} from '../../reducers/question'
 
 import CommentOne from '../commentOne/commentOne.js'
 
@@ -15,9 +15,7 @@ class CommentList extends Component {
 
   componentDidMount () {
     this.props.dispatch(fetchDataInGet()); 
-    // this.props.addComment('add comment');
     // this._loadComments();
-    console.log('aa');
   }
 
   componentWillUnmount () {
@@ -64,9 +62,6 @@ const mapDispatchToProps = (dispatch, props) => {
     dispatch,
     initComments: () => {
       dispatch(requestGet())
-    },
-    addComment: (data) => {
-      dispatch(addComment(data))
     }
   }
 }

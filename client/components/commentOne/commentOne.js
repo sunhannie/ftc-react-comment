@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux'
+import {fetchDataInPost} from '../../reducers/question'
 import  './commentOne.scss'
 
 import CommentReply from '../commentInput/commentReply.js'
@@ -10,7 +11,13 @@ import CommentReply from '../commentInput/commentReply.js'
 class CommentOne extends Component {
   constructor () {
     super()
-    this.state = { comments: '' }
+    
+    
+    this.state = { 
+      comments: '' ,
+      supportCount:0,
+      disagreeCount:0
+    }
     // this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
     // console.log(this.props);
@@ -18,6 +25,14 @@ class CommentOne extends Component {
 
   componentWillMount () {
     
+    const request = this.props.requestData;
+    this.setState({
+      supportCount:request.support_count,
+      disagreeCount:request.disagree_count,
+      supportWord:'支持',
+      disagreeWord:'反对',
+      isShow:false
+    })
   }
 
   componentWillUnmount () {
@@ -33,6 +48,30 @@ class CommentOne extends Component {
   }
   reply(){
     console.log('reply');
+    
+    this.setState({
+      isShow:true
+    })
+  }
+  support(){
+
+    this.setState({
+      supportCount:Number(this.state.supportCount)+1,
+      supportWord:'已支持',
+    })
+  }
+  disagree(){
+    this.setState({
+      disagreeCount:Number(this.state.disagreeCount)+1,
+      disagreeWord:'已反对',
+    })
+  }
+
+  handleIsShowreply () {
+    this.props.dispatch(fetchDataInPost()); 
+    this.setState({
+      isShow:false
+    })
   }
 
   render () {
@@ -40,7 +79,7 @@ class CommentOne extends Component {
     const request = this.props.requestData;
    
     return (
-      
+      // 当点击支持时，数量加1
       <div className="commentcontainer">
           <div>
               <div className="ding"></div>
@@ -51,8 +90,21 @@ class CommentOne extends Component {
 
          <dd>{request.talk}</dd>
 
-{/*逻辑是，评论有1条仅仅是dd中包含一句话，当有2条评论时，在p上加上class并在之前加上cmt_quote，它包含cmt_oldautherinfo；当有3条评论时，在cmt_oldautherinfo前加上*/}
-    {/*<dd>
+
+
+        <CommentReply isShow={this.state.isShow} handleIsShowreply={this.handleIsShowreply.bind(this)}/>
+        <div className="replycomment">
+            <span onClick={this.reply.bind(this)}>回复</span>
+            <span onClick={this.support.bind(this)}>{this.state.supportWord}</span>
+            (<font  color="#BA2636">{this.state.supportCount}</font>) 
+            <span onClick={this.disagree.bind(this)}>{this.state.disagreeWord}</span>
+            (<font>{this.state.disagreeCount}</font>)
+        </div>
+    </div>
+
+
+  /*逻辑是，评论有1条仅仅是dd中包含一句话，当有2条评论时，在p上加上class并在之前加上cmt_quote，它包含cmt_oldautherinfo；当有3条评论时，在cmt_oldautherinfo前加上*/
+    /*<dd>
       <div className="cmt_quote">
         <div className="cmt_quote">
            	<div className="cmt_oldautherinfo">
@@ -66,19 +118,7 @@ class CommentOne extends Component {
         <p className="cmt_oldcmt">同感</p>
       </div>
       绝对赞同
-    </dd>*/}
-
-        <CommentReply/>
-        <div className="replycomment">
-            <span onClick={this.reply.bind(this)}>回复</span>
-            <a href='javascript:cmt_reply("lbdTJ8s8YA__2d","h");'>回复</a> 
-            <a id="hstlbdTJ8s8YA__2d" href='javascript:voteComment("lbdTJ8s8YA__2d","#hst", "support");'>支持</a>
-            (<font id="hstslbdTJ8s8YA__2d" color="#BA2636">143</font>) 
-            <a id="hdtlbdTJ8s8YA__2d" href='javascript:voteComment("lbdTJ8s8YA__2d","#hdt","disagree");'>反对</a>
-            (<font id="hdtdlbdTJ8s8YA__2d">8</font>)
-        </div>
-    </div>
-
+    </dd>*/
 
     /*<div class="commentcontainer">
       <dt>
@@ -109,8 +149,20 @@ class CommentOne extends Component {
           <dt class="replycomment"><a href='javascript:cmt_reply("FDW3jRbmFIw_eb","");'>回复</a> <a id="stFDW3jRbmFIw_eb" href='javascript:voteComment("FDW3jRbmFIw_eb","#st","support");'>支持</a>(<font id="stsFDW3jRbmFIw_eb">4</font>) <a id="dtFDW3jRbmFIw_eb" href='javascript:voteComment("FDW3jRbmFIw_eb","#dt","disagree");'>反对</a>(<font id="dtdFDW3jRbmFIw_eb">0</font>)
           </dt>
       </div>*/
+
+      
     )
   }
 }
 
-export default CommentOne
+const mapStateToProps = (state) => {
+  return {
+    comments: state,
+    request_data:state.requestReducer
+  }
+}
+
+export default connect(
+  mapStateToProps,
+)(CommentOne)
+// export default CommentOne

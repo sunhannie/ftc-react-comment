@@ -40,6 +40,8 @@ class CommentInput extends Component {
                 <div className="submint-section"><button className="comment_btn submitbutton button ui-light-btn" id="addnewcommentr" >提交评论</button></div>
         </div>
     </div>
+
+    
     )
   }
 }

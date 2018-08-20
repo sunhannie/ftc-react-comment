@@ -180,7 +180,13 @@ dd.all {text-align:right;margin-bottom:15px;}
 
 .replybox{
     // background-color: rebeccapurple;
-	.submint-section{
+	.submit-section{
 		text-align: center;
 	}
+}
+.show{
+	display: block;
+}
+.hide{
+	display: none;
 }

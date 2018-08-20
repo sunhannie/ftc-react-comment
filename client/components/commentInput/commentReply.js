@@ -14,41 +14,42 @@ class CommentReply extends Component {
 
   constructor () {
     super()
-    this.state = { content: '' }
-    // this.handleInputChange = this.handleInputChange.bind(this);
+    this.state = { 
+      content:'',
+      isShow: false 
+    }
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
   }
 
   componentWillMount () {
-   
+    this.setState({
+      isShow:this.props.isShow
+    })
   }
 
   componentWillUnmount () {
     
   }
-//   handleContentChange (event) {
-//     this.setState({
-//       content: event.target.value
-//     })
-//   }
 
   handleTextareaChange (event) {
     this.setState({
       content: event.target.value
     })
   }
-
+  submitReply(){
+    this.props.handleIsShowreply();  //改变父的state，进一步改变此组件的props
+  }
 
   render () {
-   
+    const props = this.props;
+    
     return (
-      
-      <div className="replybox" id="reFDW3jRbmFIw_eb">
+      <div className={`replybox  ${this.props.isShow ? 'show' : 'hide'} `}>
           <div id="reply-input-container">
                <b>回复此评论：</b>
                <textarea id="replycontent" className="commentTextArea" rows="3" onChange={this.handleTextareaChange.bind(this)}></textarea>
 
-                <div className="submint-section"><button className="comment_btn submitbutton button ui-light-btn" id="addnewcommentr" >提交回复</button></div>
+                <div className="submit-section"><button className="comment_btn submitbutton button ui-light-btn" onClick={this.submitReply.bind(this)}>提交回复</button></div>
         </div>
     </div>
     )
