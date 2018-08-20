@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import commentOne from './commentOne.scss'
+import  './commentOne.scss'
 
 import CommentReply from '../commentInput/commentReply.js'
 
@@ -31,7 +31,9 @@ class CommentOne extends Component {
       content: event.target.value
     })
   }
-
+  reply(){
+    console.log('reply');
+  }
 
   render () {
     
@@ -68,7 +70,9 @@ class CommentOne extends Component {
 
         <CommentReply/>
         <div className="replycomment">
-            <a href='javascript:cmt_reply("lbdTJ8s8YA__2d","h");'>回复</a> <a id="hstlbdTJ8s8YA__2d" href='javascript:voteComment("lbdTJ8s8YA__2d","#hst", "support");'>支持</a>
+            <span onClick={this.reply.bind(this)}>回复</span>
+            <a href='javascript:cmt_reply("lbdTJ8s8YA__2d","h");'>回复</a> 
+            <a id="hstlbdTJ8s8YA__2d" href='javascript:voteComment("lbdTJ8s8YA__2d","#hst", "support");'>支持</a>
             (<font id="hstslbdTJ8s8YA__2d" color="#BA2636">143</font>) 
             <a id="hdtlbdTJ8s8YA__2d" href='javascript:voteComment("lbdTJ8s8YA__2d","#hdt","disagree");'>反对</a>
             (<font id="hdtdlbdTJ8s8YA__2d">8</font>)
