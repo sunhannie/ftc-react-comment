@@ -1,33 +1,21 @@
 const ADD_QUESTION = 'ADD_QUESTION';
 const MARK_QUESTION = 'MARK_QUESTION';
 const REQUEST_GET = 'REQUEST_GET';
-const ADD_COUNT = 'ADD_COUNT';
+
 import { combineReducers } from 'redux'
-// 对象怎么合并？写法上需要熟悉。抓取数据，dispatch动作
-export const reducer = (state, action) => {
-// export default  function (state, action){  //这样写可以不写函数名
-    // console.log(state);
+
+const reducer = (state={}, action) => {
     if (!state) { 
         state = {}
     }
 
-    /**
-     * 下一步研究的是怎么获取到默认state
-     */
-    // [...'hello']  
-    // let aClone = Object.assign({}, [1,2,3]);
-    // var aClone = {...[1,2,3]};  
-    // let aClone = { ...{questions1: [14]} }; //对象和数组都是可以运行
     switch(action.type){
         case ADD_QUESTION:
             return {questions: [...state, action.question1]}
         case MARK_QUESTION:
-        // console.log(action.mark_question);//这里的值就是触发传过来的值，得到{answeredQ: false, valueQ: "50"}。我该怎么样把此处的值更新到页面中
             return {mark_question_data:action.mark_question}
         default:
-        // 此处state是默认值，即为{}
-           let aClone = { ...{questions1: [14]}  } ; 
-            // console.log( { ...state });
+           let aClone = { ...{questions: [14]}  } ; 
             return ({
                 ...aClone,   
                 state   
@@ -36,47 +24,29 @@ export const reducer = (state, action) => {
 }
 
 
-export const requestReducer = (state = { }, action) => {
+ const requestReducer = (state = { }, action) => {
   switch (action.type) {
     case REQUEST_GET:
-    // console.log('action.request_get_data:'+action.request_get_data);
+    //   console.log(action.request_data);
       return {
-        ...state,
-        request: 'request result'
+        request:'test request',
+        request_data: action.request_data
       }
-    case ADD_COUNT:
-        return {add_count:'add_count'}
     default:
-      return state
+      return {...state}
   }
 }
 
-export function addCount() {
-    // console.log('addCount execute');
-  return {type: ADD_COUNT}
-}
- 
-export function addCountAsync() {
-  // console.log('addCountAsync execute');
-  return (dispatch,getState) => {
-    // console.log('addCountAsync dispatch'); //触发在store.dipatch，这里才起作用（也就是thunk起作用）
-    setTimeout( () => {
-      dispatch(addCount())
-    },2000)
-  }
-}
 
-// 结合起来，返回一对象
-export const rootReducer = combineReducers({
-  reducer,
-  requestReducer
-})
+/**
+ * action
+ * @param dispatch 
+ */
 
 
-function requestQuestion(value) {
-  
-    const key = value.toLowerCase().replace(/\s/g, '-');
-    const data = '../../client/data/china.json';
+function requestComments(dispatch) {
+
+    const data = '../../client/data/comment.json';
     const init = {
       method:  'GET',
       headers:{ 
@@ -90,29 +60,39 @@ function requestQuestion(value) {
 
       fetch(data,init)
       .then(res => res.json())
-      .then(({ questions }) => {
-        console.log(questions);
+      .then(( comments ) => {
+          return comments;
+        // dispatch(requestGet(comments))
     });
    
   }
 
-export const addQuestion = (question1) => {
-    return { type: ADD_QUESTION, question1 }
+export const requestGet = (request_data) => {
+    return { type: REQUEST_GET, request_data}
 }
 
-export const markQuestion1 = (mark_question) => {
-    return { type: MARK_QUESTION, mark_question}
+export const fetchDataInGet = data => (dispatch, getState)  => {
+    return requestComments(dispatch);
 }
 
-export const requestGet = (request_get_data) => {
-    return { type: REQUEST_GET, request_get_data}
-}
+// export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {
+//     return dispatch(fetchDataInGet(subreddit))   
+// }
 
-export const fetchDataInGet = data => dispatch => {
-    console.log('data'+data);
-    dispatch(requestGet(data))  
-    // return fetch('https://www.reddit.com/r/reactjs.json')
-    // .then(response => response.json())
-    // .then(json =>{console.log('json');} ) 
-    return requestQuestion('zzz');
-}
+// export const fetchDataInGet = data => (dispatch, getState)  => {
+//     // dispatch(requestGet(data))  
+//     // return fetch('../../client/data/comment.json')
+//     // .then(response => response.json())
+//     // .then(json =>{console.log(json);} ) 
+//     return requestComments(dispatch);
+// }
+
+
+// 结合起来，返回一对象
+const rootReducer = combineReducers({
+//   reducer,
+  requestReducer
+})
+
+export {requestReducer,rootReducer} 
+

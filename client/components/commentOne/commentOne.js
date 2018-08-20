@@ -10,23 +10,21 @@ import CommentReply from '../commentInput/commentReply.js'
 class CommentOne extends Component {
   constructor () {
     super()
-    this.state = { content: '' }
+    this.state = { comments: '' }
     // this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    // console.log(this.props);
   }
 
   componentWillMount () {
-   
+    
   }
 
   componentWillUnmount () {
     
   }
-//   handleContentChange (event) {
-//     this.setState({
-//       content: event.target.value
-//     })
-//   }
+
+
 
   handleTextareaChange (event) {
     this.setState({
@@ -36,7 +34,7 @@ class CommentOne extends Component {
 
 
   render () {
-   
+    // console.log(this.state);
     return (
       
       <div className="commentcontainer">

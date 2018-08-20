@@ -5,7 +5,7 @@ import { createStore,applyMiddleware,compose} from 'redux'
 import { Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 
-import {rootReducer,addCountAsync} from './reducers/question'
+import {requestReducer,rootReducer,fetchDataInGet} from './reducers/question'
 import App from './app'  //不需要添加{}
 const middleware = [ thunk ];
 const enhancer = compose(
@@ -18,8 +18,7 @@ const store = createStore(
   rootReducer,
   applyMiddleware(thunk)
 );
-
-store.dispatch(addCountAsync());  
+// store.dispatch(fetchDataInGet());  
 ReactDOM.render(
   <Provider store={store}>
   <App/>

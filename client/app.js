@@ -7,13 +7,8 @@ import {connect} from 'react-redux'
 
 import CommentInput from './components/commentInput/commentInput.js';
 
-import CommentOne from './components/commentOne/commentOne.js';
 
 import CommentList from './components/commentList/commentList.js';
-// import Overview from './components/overview/overview.js';
-// import Question from './components/question/question.js';
-
-// import {rootReducer,addQuestion,requestGet,markQuestion1} from './reducers/question'
 
 
 class App extends React.Component {
@@ -40,8 +35,7 @@ class App extends React.Component {
 
     return (
     	<div className="allcomments">
-        
-        {/*<CommentOne />*/}
+
         <CommentList />
         <CommentInput/>
       </div>
@@ -59,10 +53,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addQuestion: (questions) => {
-      dispatch(addQuestion(questions))
-    },
-    requestGet: (request_get_data) => {
-      dispatch(requestGet(request_get_data)) ; 
+      // dispatch(addQuestion(questions))
     }
     
   }
