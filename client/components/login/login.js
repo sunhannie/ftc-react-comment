@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import { Users } from './data.js';
 import login from './login.scss';
-import {SetCookie} from '../../../util/api'
+import {SetCookie,isLocal} from '../../../util/api'
 
 class Login extends React.Component {
   constructor(props) {
@@ -23,11 +23,18 @@ class Login extends React.Component {
   }
 inlineCheckEmail(username){
   if(username != '') {
+    let url = '';
+    if(isLocal()){
+      url = 'http://localhost:3002/checkemail'
+    }else{
+      url = '/ajax/checkemail'
+    }
+   
     let obj = {
       'username':username
     }
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/ajax/checkemail');              
+    xhr.open('POST', url);              
     xhr.setRequestHeader('Content-Type', 'text/plain');
     xhr.onreadystatechange = () => {    
         if (xhr.status === 200) { 

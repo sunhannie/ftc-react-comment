@@ -124,7 +124,14 @@ function postServer(method,url,obj){
     xhr.send(obj); 
 }
 function isLocal(){
+    var isLocal=false;  
+
     
+    if (window.location.origin.search("localhost:3000") != -1 ) {
+        isLocal=true;
+    }
+    console.log(window.location.origin)
+    return isLocal
 }
 
 export {
@@ -136,5 +143,6 @@ export {
     parseUrlSearch,
     getUrlParams,
     isEmptyObj,
-    getDeviceType
+    getDeviceType,
+    isLocal
 };
