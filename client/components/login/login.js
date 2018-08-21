@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
+import { connect } from 'react-redux';
 import { Users } from './data.js';
 import login from './login.scss';
 import {SetCookie,isLocal} from '../../../util/api'
+import {fetchDataInAjax} from '../../reducers/question'
 
 class Login extends React.Component {
   constructor(props) {
@@ -22,35 +23,60 @@ class Login extends React.Component {
     // this.login = this.login.bind(this);
   }
 inlineCheckEmail(username){
+  var obj={
+    'username':username
+  }
+  this.props.dispatch(fetchDataInAjax(obj)); 
+  const that = this;
   if(username != '') {
-    let url = '';
-    if(isLocal()){
-      url = 'http://localhost:3002/checkemail'
-    }else{
-      url = '/ajax/checkemail'
-    }
-   
-    let obj = {
-      'username':username
-    }
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', url);              
-    xhr.setRequestHeader('Content-Type', 'text/plain');
-    xhr.onreadystatechange = () => {    
-        if (xhr.status === 200) { 
-            // var response = xhr.responseText;         
-            this.setState({
-              isExistUserName:true
-            })
-        }
-    }
+    // let url = '';
+    // if(isLocal()){
+    //   url = 'http://localhost:3002/checkemail'
+    // }else{
+    //   url = '/ajax/checkemail'
+    // }
+    // let obj = {
+    //   'username':username
+    // }
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('POST', url);              
+    // xhr.setRequestHeader('Content-Type', 'text/plain');
+    // xhr.onreadystatechange = () => {    
+    //     if (xhr.status === 200) { 
+    //       var res = xhr.responseText; 
+    //       var res1 = JSON.parse(res);
+    //       console.log(res1); 
+          // for (let user of Object.values(res.Users)) {
+          //   console.log(user.username); 
+          // }  
+          // 判断元素是否存在对象中，可以通过什么算法？
+        //   for (let user of res.Users) {
+        //     if (user.username === username) {
+        //        that.setState({
+        //           error: '',
+        //           isShow:false
+        //         })
+        //     }else{
+        //       if(!!username){
+        //         that.setState({
+        //           error: '用户名已经存在，请重新输入',
+        //           isShow:true
+        //         });
+        //       }
+              
+        //     }
+        //  }   
+        
+    //     }
+    // }
     
-    xhr.send(JSON.stringify(obj));    
+    // xhr.send(JSON.stringify(obj));    
  
   }
 }
   // 还需要focus
 validateUsername(event) {
+  console.log('validateUsername');
     let username =   event.target.value ;
     if (!username) {  
       this.setState({
@@ -66,11 +92,7 @@ validateUsername(event) {
           isShow:true
         })
       }else{
-         this.inlineCheckEmail(username);
-         this.setState({
-          error: '',
-          isShow:false
-        })
+         this.inlineCheckEmail(username);       
       }
 
     }
@@ -127,5 +149,12 @@ login(){
   }
 
 }
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    dispatch
+  }
+}
 
-export default Login;
+export default connect(
+  mapDispatchToProps
+)(Login)

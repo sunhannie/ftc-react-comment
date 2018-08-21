@@ -2,8 +2,9 @@ const ADD_COMMENT = 'ADD_COMMENT';
 const MARK_QUESTION = 'MARK_QUESTION';
 const REQUEST_GET = 'REQUEST_GET';
 const REQUEST_POST = 'REQUEST_POST';
+const REQUEST_AJAX = 'REQUEST_AJAX';
 import { combineReducers } from 'redux'
-
+import {SetCookie,isLocal} from '../../util/api'
 const reducer = (state={}, action) => {
     if (!state) { 
         state = {}
@@ -29,7 +30,8 @@ const reducer = (state={}, action) => {
     case REQUEST_GET:
       return action.request_data
     case REQUEST_POST:
-      console.log(action.request_data);
+      return action.request_data
+    case REQUEST_AJAX:
       return action.request_data
     default:
       return []
@@ -95,7 +97,47 @@ function postComments(dispatch,data) {
         })
       .then( json => { 
           console.log(JSON.stringify(json));  //得出的值为什么是键
-    //    return dispatch(requestPost(comments.result))
+    });
+   
+}
+// 发现一个现象，ajax请求会请求2此，fetch是一次，这是为什么？
+function ajax(dispatch,obj) {
+    let url = '';
+    if(isLocal()){
+      url = 'http://localhost:3002/checkemail'
+    }else{
+      url = '/ajax/checkemail'
+    }
+    // var xhr = new XMLHttpRequest();
+    // xhr.open('POST', url);              
+    // xhr.setRequestHeader('Content-Type', 'text/plain');
+    // xhr.onreadystatechange = () => {    
+    //     if (xhr.status === 200) { 
+    //       var res = xhr.responseText; 
+    //       var res1 = JSON.parse(res);
+    //       console.log('res1'); 
+    //     //   dispatch(requestAjax(res1))
+    //     }
+    // }
+    
+    // xhr.send(JSON.stringify(obj)); 
+
+    const init = {
+      method:  'POST',
+      headers:{ 
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      mode: 'cors',
+      credentials: 'include',
+      body: obj
+    }
+
+    fetch(url,init)
+      .then(res => {
+          return res.json()
+        })
+      .then( json => { 
+          console.log(JSON.stringify(json));  //得出的值为什么是键
     });
    
 }
@@ -113,12 +155,20 @@ export const requestPost = (request_data) => {
     return { type: REQUEST_POST, request_data}
 }
 
+export const requestAjax = (request_data) => {
+    return { type: REQUEST_AJAX, request_data}
+}
+
 export const fetchDataInGet = data => (dispatch, getState)  => {
     return requestComments(dispatch);
 }
 
 export const fetchDataInPost = data => (dispatch, getState)  => {
     return postComments(dispatch,data);
+}
+
+export const fetchDataInAjax = data => (dispatch, getState)  => {
+    return ajax(dispatch,data);
 }
 
 export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {
