@@ -43,7 +43,7 @@ login(){
     console.log(this.props.isShow)
     return (
 
-    <div>
+    <div className={`container ${this.props.isShowLogin ? 'show' : 'hide'} `}>
         <div className="">用户名</div>
         <input type="text" autocorrect="off" name="username" className="user-id" onChange={this.usernameChange.bind(this)}/>
         <div className="">密码</div>

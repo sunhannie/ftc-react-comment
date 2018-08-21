@@ -33,7 +33,8 @@ class CommentOne extends Component {
       disagreeCount:request.disagree_count,
       supportWord:'支持',
       disagreeWord:'反对',
-      isShow:false
+      isShow:false,
+      isShowLogin:false
     })
   }
 
@@ -53,14 +54,15 @@ class CommentOne extends Component {
     let userId = GetCookie('USER_ID') ;
     if(userId){
       this.setState({
-        isShow:true
+        isShow:true,
+        isShowLogin:false
       })
     }else{
       this.setState({
-        isShow:false
+        isShow:false,
+        isShowLogin:true
       })
     }
-    this.Greeting();
   }
   support(){
 
@@ -111,7 +113,11 @@ class CommentOne extends Component {
          <dd>{request.talk}</dd>
 
         {/*如果没有登录，点击回复，出现Login，否则出现CommentReply */}
-        {greet}
+        {/*{greet}*/}
+
+        <CommentReply isShow={this.state.isShow} handleIsShowreply={this.handleIsShowreply.bind(this)}/>
+
+        <Login isShowLogin={this.state.isShowLogin}/>
         
         <div className="replycomment">
             <span onClick={this.reply.bind(this)}>回复</span>

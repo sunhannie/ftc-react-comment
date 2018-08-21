@@ -41,6 +41,8 @@ class CommentReply extends Component {
   submitReply(){
     this.props.handleIsShowreply();  //改变父的state，进一步改变此组件的props
     this.props.dispatch(fetchDataInPost(this.state.content)); 
+    // this.textareaEle.style.backgroundColor = 'yellow';
+    this.textareaEle.value = '';
   }
 
   render () {
@@ -50,9 +52,9 @@ class CommentReply extends Component {
       <div className={`replybox  ${this.props.isShow ? 'show' : 'hide'} `}>
           <div id="reply-input-container">
                <b>回复此评论：</b>
-               <textarea id="replycontent" className="commentTextArea" rows="3" onChange={this.handleTextareaChange.bind(this)}></textarea>
+               <textarea className="commentTextArea" rows="3" onChange={this.handleTextareaChange.bind(this)} ref={ele => { this.textareaEle = ele; }}></textarea>
 
-                <div className="submit-section"><button className="comment_btn submitbutton button ui-light-btn" onClick={this.submitReply.bind(this)}>提交回复</button></div>
+                <div className="submit-section"><button className="comment_btn button ui-light-btn" onClick={this.submitReply.bind(this)}>提交回复</button></div>
         </div>
     </div>
     )
