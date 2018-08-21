@@ -5,6 +5,8 @@ import classnames from 'classnames';
 
 import { Users } from './data.js';
 import login from './login.scss';
+import {SetCookie} from '../../../util/api'
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -22,28 +24,33 @@ class Login extends React.Component {
   }
 
 
- usernameChange(){
-
+ usernameChange(event){
+    this.setState({
+      username: event.target.value
+    })
  }
- passwordChange(){
-
+ passwordChange(event){
+    this.setState({
+      password: event.target.value
+    })
  }   
 login(){
-
+  SetCookie('USER_ID',this.state.username,null,null,'')
 }
-
+// 第一次this.props.isShow 默认是false，然后点击再判断有没有cookie，当点击才知道有没有cookie
   render() {
     const props = this.props;
+    console.log(this.props.isShow)
     return (
 
-    <div className={`container  ${this.props.isShow ? 'hide' : 'show'} `}>
-        <div class="username-label">用户名</div>
-        <input type="text" autocorrect="off" name="username" class="user_id textinput user-name" onChange={this.usernameChange.bind(this)}/>
-        <div class="password-label">密码</div>
-        <input type="password" name="password" class="user_id textinput password" onChange={this.passwordChange.bind(this)}/>
-        <button type="submit" class="comment_btn submitbutton button ui-light-btn" onClick={this.login.bind(this)}>登录后发表评论</button>
-        <div class="topmargin statusmsg"></div>
-        <div class="centerButton"><a href="http://user.ftchinese.com/register" target="_blank"><button class="ui-light-btn stress">免费注册</button></a></div>
+    <div>
+        <div className="">用户名</div>
+        <input type="text" autocorrect="off" name="username" className="user-id" onChange={this.usernameChange.bind(this)}/>
+        <div className="">密码</div>
+        <input type="password" name="password" className="user-id" onChange={this.passwordChange.bind(this)}/>
+        <button type="submit" className="button ui-light-btn" onClick={this.login.bind(this)}>登录后发表评论</button>
+        <div className="status-msg"></div>
+        <div className="centerButton"><a href="http://user.ftchinese.com/register" target="_blank"><button className="ui-light-btn">免费注册</button></a></div>
     </div>
     
     );

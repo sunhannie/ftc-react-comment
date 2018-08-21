@@ -8,7 +8,7 @@ import  './commentOne.scss'
 
 import CommentReply from '../commentInput/commentReply.js'
 import Login from '../login/login.js'
-
+import {GetCookie} from '../../../util/api'
 
 class CommentOne extends Component {
   constructor () {
@@ -49,11 +49,18 @@ class CommentOne extends Component {
     })
   }
   reply(){
-    console.log('reply');
-    
-    this.setState({
-      isShow:true
-    })
+    console.log('reply'+GetCookie('USER_ID'));
+    let userId = GetCookie('USER_ID') ;
+    if(userId){
+      this.setState({
+        isShow:true
+      })
+    }else{
+      this.setState({
+        isShow:false
+      })
+    }
+    this.Greeting();
   }
   support(){
 
@@ -76,8 +83,19 @@ class CommentOne extends Component {
     })
   }
 
+ Greeting() {
+    if(this.state.isShow){
+        return  <CommentReply isShow={this.state.isShow} handleIsShowreply={this.handleIsShowreply.bind(this)}/>
+    }else{
+      return <div>
+      <Login isShow={this.state.isShow}/>
+      <dd>11</dd>
+      </div>
+    }
+}
+
   render () {
-    
+    const greet = this.Greeting();
     const request = this.props.requestData;
    
     return (
@@ -92,11 +110,9 @@ class CommentOne extends Component {
 
          <dd>{request.talk}</dd>
 
-{/*如果没有登录，*/}
-         
-        <CommentReply isShow={this.state.isShow} handleIsShowreply={this.handleIsShowreply.bind(this)}/>
-
-        <Login isShow={this.state.isShow}/>
+        {/*如果没有登录，点击回复，出现Login，否则出现CommentReply */}
+        {greet}
+        
         <div className="replycomment">
             <span onClick={this.reply.bind(this)}>回复</span>
             <span onClick={this.support.bind(this)}>{this.state.supportWord}</span>

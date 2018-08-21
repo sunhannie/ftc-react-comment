@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import {fetchDataInPost} from '../../reducers/question'
 import commentInput from './commentInput.scss'
 
+
 class CommentReply extends Component {
 //   static propTypes = {
 //     comment: PropTypes.object.isRequired,

@@ -139,6 +139,7 @@ dd.all {text-align:right;margin-bottom:15px;}
 .container {
 	padding: 0 $defaultPadding/2 $defaultPadding/2 $defaultPadding/2;
 	font-size: 0.9em;
+	display: none;
 }
 .centerButton, .container {
 	text-align: center;
@@ -161,7 +162,7 @@ dd.all {text-align:right;margin-bottom:15px;}
 	}
 }
 
-.user_id {
+.user-id {
 	-webkit-appearance: none;
 	background-color: white;
 	border-image: initial;
