@@ -74,7 +74,7 @@ function postComments(dispatch,data) {
      * text/plain  multipart/form-data {}
      * body: JSON.stringify({'data':data})
      */
-     console.log(JSON.stringify({'data':data}));
+    //  console.log(JSON.stringify({'data':data}));
     const init = {
       method:  'POST',
       headers:{ 
@@ -99,6 +99,7 @@ function postComments(dispatch,data) {
     });
    
 }
+
 
 export const addComment = (dataAdded) => {
     return { type: ADD_COMMENT, dataAdded}

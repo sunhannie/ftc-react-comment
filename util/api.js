@@ -106,6 +106,27 @@ function getDeviceType() {
     return deviceType;
 }
 
+function postServer(method,url,obj){
+    var xhr = new XMLHttpRequest();
+    if(method==='GET'){
+        obj = null;
+    }else if(method==='POST'){
+        obj = obj;
+    }
+    xhr.open(method, url);              
+    xhr.setRequestHeader('Content-Type', 'text/plain');
+    xhr.onreadystatechange = () => {    
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) { 
+            return xhr.responseText;
+        }
+    }
+    
+    xhr.send(obj); 
+}
+function isLocal(){
+    
+}
+
 export {
     EventObject,
     GetCookie,

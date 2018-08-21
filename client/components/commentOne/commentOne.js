@@ -102,7 +102,7 @@ class CommentOne extends Component {
    
     return (
       // 当点击支持时，数量加1
-      <div className="commentcontainer">
+      <div className="comment-container">
           <div>
               <div className="ding"></div>
               <span>{request.dnewdate}</span>
@@ -119,7 +119,7 @@ class CommentOne extends Component {
 
         <Login isShowLogin={this.state.isShowLogin}/>
         
-        <div className="replycomment">
+        <div className="reply-comment">
             <span onClick={this.reply.bind(this)}>回复</span>
             <span onClick={this.support.bind(this)}>{this.state.supportWord}</span>
             (<font  color="#BA2636">{this.state.supportCount}</font>) 
