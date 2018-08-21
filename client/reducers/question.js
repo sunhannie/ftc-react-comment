@@ -66,15 +66,15 @@ function requestComments(dispatch) {
   }
 
 function postComments(dispatch,data) {
-    const url = 'http://localhost:3002/';  //设置mode: 'cors'，这个能get到'http://localhost:3001/'网址
+    const url = 'http://localhost:3002/add';  //设置mode: 'cors'，这个能get到'http://localhost:3001/'网址
     const init = {
-      method:  'GET',
+      method:  'POST',
       headers:{ 
         "Content-Type": "application/x-www-form-urlencoded"
       },
       mode: 'cors',
       credentials: 'include',
-      body: data
+      body: 'data'
     }
 
     fetch(url,init)
