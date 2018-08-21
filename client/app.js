@@ -6,9 +6,8 @@ import {connect} from 'react-redux'
 
 
 import CommentInput from './components/commentInput/commentInput.js';
-
-
 import CommentList from './components/commentList/commentList.js';
+import Login from './components/login/login.js';
 
 
 class App extends React.Component {
@@ -38,6 +37,7 @@ class App extends React.Component {
 
         <CommentList />
         <CommentInput/>
+        <Login />
       </div>
     );
   }

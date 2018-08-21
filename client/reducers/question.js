@@ -29,7 +29,7 @@ const reducer = (state={}, action) => {
     case REQUEST_GET:
       return action.request_data
     case REQUEST_POST:
-    //   console.log(action.request_data);
+      console.log(action.request_data);
       return action.request_data
     default:
       return []
@@ -66,21 +66,35 @@ function requestComments(dispatch) {
   }
 
 function postComments(dispatch,data) {
-    const url = 'http://localhost:3002/add';  //设置mode: 'cors'，这个能get到'http://localhost:3001/'网址
+    const url = 'http://localhost:3002/';  //设置mode: 'cors'，这个能get到'http://localhost:3001/'网址
+    let formData = new FormData();
+    formData.append("username","hello");
+    formData.append("password","1111aaaa");
+    /**
+     * text/plain  multipart/form-data {}
+     * body: JSON.stringify({'data':data})
+     */
+     console.log(JSON.stringify({'data':data}));
     const init = {
       method:  'POST',
       headers:{ 
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        // 'Accept': 'application/json',
+//    　　　'Content-Type': 'application/json',
+        // 'Access-Control-Allow-Origin':'*',
+        // 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',后端设置的，前端设置报错
       },
       mode: 'cors',
       credentials: 'include',
-      body: 'data'
+      body: data
     }
 
     fetch(url,init)
-      .then(res => res.json())
-      .then(( comments ) => { 
-          console.log(comments);
+      .then(res => {
+          return res.json()
+        })
+      .then( json => { 
+          console.log(JSON.stringify(json));  //得出的值为什么是键
     //    return dispatch(requestPost(comments.result))
     });
    
@@ -103,7 +117,7 @@ export const fetchDataInGet = data => (dispatch, getState)  => {
 }
 
 export const fetchDataInPost = data => (dispatch, getState)  => {
-    return postComments(dispatch);
+    return postComments(dispatch,data);
 }
 
 export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {

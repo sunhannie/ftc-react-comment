@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
+import { connect } from 'react-redux';
+import {fetchDataInPost} from '../../reducers/question'
 import commentInput from './commentInput.scss'
 
 class CommentReply extends Component {
@@ -38,6 +39,7 @@ class CommentReply extends Component {
   }
   submitReply(){
     this.props.handleIsShowreply();  //改变父的state，进一步改变此组件的props
+    this.props.dispatch(fetchDataInPost(this.state.content)); 
   }
 
   render () {
@@ -56,4 +58,21 @@ class CommentReply extends Component {
   }
 }
 
-export default CommentReply
+const mapStateToProps = (state) => {
+  return {
+    comments: state,
+    request_data:state.requestReducer
+  }
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CommentReply)
+// export default CommentReply

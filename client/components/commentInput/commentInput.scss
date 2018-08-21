@@ -160,6 +160,7 @@ dd.all {text-align:right;margin-bottom:15px;}
 		background: #6eb153;
 	}
 }
+
 .user_id {
 	-webkit-appearance: none;
 	background-color: white;
@@ -177,12 +178,12 @@ dd.all {text-align:right;margin-bottom:15px;}
 		margin-bottom: $defaultPadding;
 	}
 }
-
 .replybox{
     // background-color: rebeccapurple;
 	.submit-section{
 		text-align: center;
 	}
+	display: none;
 }
 .show{
 	display: block;

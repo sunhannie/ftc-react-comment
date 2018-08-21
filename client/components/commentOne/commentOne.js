@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import {fetchDataInPost} from '../../reducers/question'
+
 import  './commentOne.scss'
 
 import CommentReply from '../commentInput/commentReply.js'
+import Login from '../login/login.js'
+
 
 class CommentOne extends Component {
   constructor () {
@@ -68,7 +70,7 @@ class CommentOne extends Component {
   }
 
   handleIsShowreply () {
-    this.props.dispatch(fetchDataInPost()); 
+    
     this.setState({
       isShow:false
     })
@@ -90,9 +92,11 @@ class CommentOne extends Component {
 
          <dd>{request.talk}</dd>
 
-
-
+{/*如果没有登录，*/}
+         
         <CommentReply isShow={this.state.isShow} handleIsShowreply={this.handleIsShowreply.bind(this)}/>
+
+        <Login isShow={this.state.isShow}/>
         <div className="replycomment">
             <span onClick={this.reply.bind(this)}>回复</span>
             <span onClick={this.support.bind(this)}>{this.state.supportWord}</span>
@@ -100,6 +104,8 @@ class CommentOne extends Component {
             <span onClick={this.disagree.bind(this)}>{this.state.disagreeWord}</span>
             (<font>{this.state.disagreeCount}</font>)
         </div>
+
+        
     </div>
 
 
