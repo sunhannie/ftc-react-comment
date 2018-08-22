@@ -30,14 +30,7 @@ class CommentList extends Component {
     // }
   }
 
- isEmptyObj(dataObj){
-     var arr = Object.keys(dataObj);    
-     if (arr.length > 0){
-        return false;
-     }else{
-        return true;
-     }
-}
+
 
   render () {
     const comments = this.props.comments;

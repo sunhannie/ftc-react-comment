@@ -85,14 +85,18 @@ class CommentOne extends Component {
     })
   }
 
+handleLogin(){
+  this.setState({
+    isShowLogin:false
+  })
+}
  Greeting() {
     if(this.state.isShow){
         return  <CommentReply isShow={this.state.isShow} handleIsShowreply={this.handleIsShowreply.bind(this)}/>
     }else{
-      return <div>
-      <Login isShow={this.state.isShow}/>
-      <dd>11</dd>
-      </div>
+      return 
+      <Login isShow={this.state.isShow} handleLogin={this.handleLogin.bind(this)}/>
+     
     }
 }
 
@@ -117,7 +121,7 @@ class CommentOne extends Component {
 
         <CommentReply isShow={this.state.isShow} handleIsShowreply={this.handleIsShowreply.bind(this)}/>
 
-        <Login isShowLogin={this.state.isShowLogin}/>
+        <Login isShowLogin={this.state.isShowLogin} handleLogin={this.handleLogin.bind(this)}/>
         
         <div className="reply-comment">
             <span onClick={this.reply.bind(this)}>回复</span>

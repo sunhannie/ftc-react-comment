@@ -7,10 +7,11 @@ import { combineReducers } from 'redux'
 import {SetCookie,isLocal} from '../../util/api'
 
 const initialState = {
-  allComment: []
+  comments: [],
+  users: {}
 }
 
-const reducer = (state={}, action) => {
+const reducer = (state=initialState.users, action) => {
     if (!state) { 
         state = {}
     }
@@ -20,20 +21,19 @@ const reducer = (state={}, action) => {
         case MARK_QUESTION:
             return {mark_question_data:action.mark_question}
         case REQUEST_AJAX:
-            return action.request_ajax
+            return { ...state,
+                users: action.request_ajax
+            }
+            // return action.request_ajax
         default:
-           let defaultState = {comments: 'default data'}; 
-            return ({
-                ...defaultState 
-            })
+        //    let defaultState = {comments: 'default data'}; 
+            return {...state}
     }
 }
 
 
- const requestReducer = (state=[], action) => {
-     
-  switch (action.type) {
-      
+ const requestReducer = (state=initialState.comments, action) => {   
+  switch (action.type) {  
     case REQUEST_GET:
         state=action.request_data;
       
@@ -42,16 +42,15 @@ const reducer = (state={}, action) => {
     //       comments:action.request_data
     //     }
         return action.request_data
-       
     default:
-      console.log(state);  //数组就可以，默认的state值会用上次的state值
+        // initialState = state;
+    //   console.log(state);  //数组就可以，默认的state值会用上次的state值
       return state 
         //为什么不能返回initialState
   }
 }
 
 const requestPostReducer = (state = { }, action) => {
-    console.log('post:'+action.type);
   switch (action.type) {
     case REQUEST_POST:
     console.log('REQUEST_POST');

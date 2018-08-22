@@ -23,56 +23,57 @@ class Login extends React.Component {
     // this.login = this.login.bind(this);
   }
 inlineCheckEmail(username){
+  // 如果写在reducer中，此处获取不到props
   var obj={
     'username':username
   }
-  this.props.dispatch(fetchDataInAjax(obj)); 
-  const that = this;
-  // const props = this.props;
-  // console.log(props);
+  var that = this;
+  // this.props.dispatch(fetchDataInAjax(obj));  
   if(username != '') {
-    // let url = '';
-    // if(isLocal()){
-    //   url = 'http://localhost:3002/checkemail'
-    // }else{
-    //   url = '/ajax/checkemail'
-    // }
-    // let obj = {
-    //   'username':username
-    // }
-    // var xhr = new XMLHttpRequest();
-    // xhr.open('POST', url);              
-    // xhr.setRequestHeader('Content-Type', 'text/plain');
-    // xhr.onreadystatechange = () => {    
-    //     if (xhr.status === 200) { 
-    //       var res = xhr.responseText; 
-    //       var res1 = JSON.parse(res);
-    //       console.log(res1); 
-          // for (let user of Object.values(res.Users)) {
-          //   console.log(user.username); 
-          // }  
-          // 判断元素是否存在对象中，可以通过什么算法？
-        //   for (let user of res.Users) {
-        //     if (user.username === username) {
-        //        that.setState({
-        //           error: '',
-        //           isShow:false
-        //         })
-        //     }else{
-        //       if(!!username){
-        //         that.setState({
-        //           error: '用户名已经存在，请重新输入',
-        //           isShow:true
-        //         });
-        //       }
+    let url = '';
+    if(isLocal()){
+      url = 'http://localhost:3002/checkemail'
+    }else{
+      url = '/ajax/checkemail'
+    }
+    let obj = {
+      'username':username
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);              
+    xhr.setRequestHeader('Content-Type', 'text/plain');
+    xhr.onreadystatechange = () => {    
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) { 
+          var res = xhr.responseText; 
+          var resJson = JSON.parse(res);
+          console.log(resJson); 
+          var usersArr = [];
+          for (let user of Object.values(resJson.Users)) {
+            usersArr.push(user.username);
+          }  
+           console.log(usersArr); 
+          // Object.values()
+          // for (let user of resJson.Users) {
+            if (usersArr.includes(username) ) {
+               that.setState({
+                  error: '用户名已经存在，请重新输入',
+                  isShow:true
+                })
+            }else{
+              if(!!username){
+                that.setState({
+                  error: '',
+                  isShow:false
+                });
+              }
               
-        //     }
+            }
         //  }   
         
-    //     }
-    // }
+        }
+    }
     
-    // xhr.send(JSON.stringify(obj));    
+    xhr.send(JSON.stringify(obj));    
  
   }
 }
@@ -98,6 +99,9 @@ validateUsername(event) {
       }
 
     }
+  }
+
+  inlineValidatePassword(password){
 
   }
 
@@ -109,12 +113,13 @@ validateUsername(event) {
         isShow:true
       });
       return false;
+    }else{
+      this.setState({
+        error: '',
+        isShow:false
+      });
+      return true;
     }
-
-    // this.setState({
-    //   errorForPassword: ''
-    // });
-    // return true;
   }
 
  usernameChange(event){
@@ -128,15 +133,27 @@ validateUsername(event) {
     })
  }   
 login(){
-  SetCookie('USER_ID',this.state.username,null,null,'')
+  SetCookie('USER_ID',this.state.username,null,null,'');
+  this.props.handleLogin();
+  // if(!this.state.isShow){
+  //   this.loginEle.style.display = 'none';
+  // }
+  
+}
+
+componentWillMount () {
+   
+}
+componentDidMount () {
+
 }
 // 第一次this.props.isShow 默认是false，然后点击再判断有没有cookie，当点击才知道有没有cookie
   render() {
     const props = this.props;
-    // console.log(props);
+    console.log(props);
     return (
 
-    <div className={`container login-container ${this.props.isShowLogin ? 'show' : 'hide'} `}>
+    <div className={`container login-container ${this.props.isShowLogin ? 'show' : 'hide'} `} ref={ele => { this.loginEle = ele; }}>
         <div className="">用户名</div>
         <input type="text"  maxLength="20" name="username" className="user-input" onChange={this.usernameChange.bind(this)} onBlur = {this.validateUsername.bind(this)}/>
         <div className="">密码</div>
@@ -155,7 +172,7 @@ login(){
 const mapStateToProps = (state) => {
   return {
     comments: state,
-    request_ajax:state.requestPostReducer
+    users:state.reducer.users
   }
 }
 

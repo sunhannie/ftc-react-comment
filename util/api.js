@@ -131,6 +131,19 @@ function isLocal(){
     return isLocal
 }
 
+function isEmptyObj(dataObj){
+     var arr = Object.keys(dataObj);    
+     if (arr.length > 0){
+        return false;
+     }else{
+        return true;
+     }
+}
+
+function isContains(obj){
+    
+}
+
 export {
     EventObject,
     GetCookie,
