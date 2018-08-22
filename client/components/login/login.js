@@ -133,7 +133,7 @@ login(){
 // 第一次this.props.isShow 默认是false，然后点击再判断有没有cookie，当点击才知道有没有cookie
   render() {
     const props = this.props;
-    console.log(props);
+    // console.log(props);
     return (
 
     <div className={`container login-container ${this.props.isShowLogin ? 'show' : 'hide'} `}>

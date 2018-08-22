@@ -30,21 +30,42 @@ class CommentList extends Component {
     // }
   }
 
+ isEmptyObj(dataObj){
+     var arr = Object.keys(dataObj);    
+     if (arr.length > 0){
+        return false;
+     }else{
+        return true;
+     }
+}
+
   render () {
-    //  requestData={props.request_data}
- 
-    const props = this.props.request_data;
-     console.log(this.props);//为什么会执行2遍？
+    const comments = this.props.comments;
+    // comments = Array.from(comments);
+     console.log(comments);//为什么会执行2遍？
+    /*const commentCom = '';
+   
+    if(!this.isEmptyObj(comments)){
+      var comments1 = comments;
+     
+       commentCom = comments1.map((comment, i) =>
+          <CommentOne
+            requestData={comments1[i]}
+            key={i}
+            index={i}
+            onDeleteComment={this.handleDeleteComment.bind(this)} />
+        )
+    }
+    */
     return (
         <div>
-         {props.map((comment, i) =>
+         {comments.map((comment, i) =>
           <CommentOne
-            requestData={props[i]}
+            requestData={comments[i]}
             key={i}
             index={i}
             onDeleteComment={this.handleDeleteComment.bind(this)} />
         )}
-        {/*<CommentOne requestData={props}/>*/}
         </div>
     )
   }
@@ -53,7 +74,7 @@ class CommentList extends Component {
 const mapStateToProps = (state) => {
   return {
     state:state,
-    request_data:state.requestReducer
+    comments:state.requestReducer
   }
 }
 

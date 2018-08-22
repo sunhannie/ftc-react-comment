@@ -46,6 +46,7 @@
     "open-browser-webpack-plugin": "0.0.5",
     "react-hot-loader": "^4.0.0",
     "react-transform-hmr": "^1.0.4",
+    "redux-logger": "^3.0.6",
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
