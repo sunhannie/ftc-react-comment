@@ -9,30 +9,39 @@ const reducer = (state={}, action) => {
     if (!state) { 
         state = {}
     }
-
     switch(action.type){
         case ADD_COMMENT:
             return {questions: [...state, action.dataAdded]}
         case MARK_QUESTION:
             return {mark_question_data:action.mark_question}
+        case REQUEST_AJAX:
+            return action.request_ajax
         default:
-           let aClone = { ...{questions: 'default data'}  } ; 
+           let defaultState = {comments: 'default data'}; 
             return ({
-                ...aClone,   
-                state   
+                ...defaultState 
             })
     }
 }
 
 
  const requestReducer = (state = { }, action) => {
+     console.log(action.type);
   switch (action.type) {
+      
     case REQUEST_GET:
       return action.request_data
+    default:
+      return []
+  }
+}
+
+const requestPostReducer = (state = { }, action) => {
+    console.log('post:'+action.type);
+  switch (action.type) {
     case REQUEST_POST:
-      return action.request_data
-    case REQUEST_AJAX:
-      return action.request_data
+    console.log('REQUEST_POST');
+      return action.request_post
     default:
       return []
   }
@@ -58,8 +67,7 @@ function requestComments(dispatch) {
       credentials: 'include',
       redirect: 'error'
     }
-
-      fetch(data,init)
+    fetch(data,init)
       .then(res => res.json())
       .then(( comments ) => { 
        return dispatch(requestGet(comments.result))
@@ -69,38 +77,24 @@ function requestComments(dispatch) {
 
 function postComments(dispatch,data) {
     const url = 'http://localhost:3002/';  //设置mode: 'cors'，这个能get到'http://localhost:3001/'网址
-    let formData = new FormData();
-    formData.append("username","hello");
-    formData.append("password","1111aaaa");
-    /**
-     * text/plain  multipart/form-data {}
-     * body: JSON.stringify({'data':data})
-     */
-    //  console.log(JSON.stringify({'data':data}));
     const init = {
       method:  'POST',
       headers:{ 
-        "Content-Type": "application/x-www-form-urlencoded",
-        // 'Accept': 'application/json',
-//    　　　'Content-Type': 'application/json',
-        // 'Access-Control-Allow-Origin':'*',
-        // 'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',后端设置的，前端设置报错
+        "Content-Type": "application/x-www-form-urlencoded"
       },
       mode: 'cors',
       credentials: 'include',
       body: data
     }
-
     fetch(url,init)
       .then(res => {
           return res.json()
         })
       .then( json => { 
           console.log(JSON.stringify(json));  //得出的值为什么是键
-    });
-   
+    });  
 }
-// 发现一个现象，ajax请求会请求2此，fetch是一次，这是为什么？
+// 发现一个现象，ajax请求会请求2此，fetch是一次，这是为什么？加上xhr.readyState === XMLHttpRequest.DONE 执行一次
 function ajax(dispatch,obj) {
     let url = '';
     if(isLocal()){
@@ -108,38 +102,18 @@ function ajax(dispatch,obj) {
     }else{
       url = '/ajax/checkemail'
     }
-    // var xhr = new XMLHttpRequest();
-    // xhr.open('POST', url);              
-    // xhr.setRequestHeader('Content-Type', 'text/plain');
-    // xhr.onreadystatechange = () => {    
-    //     if (xhr.status === 200) { 
-    //       var res = xhr.responseText; 
-    //       var res1 = JSON.parse(res);
-    //       console.log('res1'); 
-    //     //   dispatch(requestAjax(res1))
-    //     }
-    // }
-    
-    // xhr.send(JSON.stringify(obj)); 
-
-    const init = {
-      method:  'POST',
-      headers:{ 
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      mode: 'cors',
-      credentials: 'include',
-      body: obj
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url);              
+    xhr.setRequestHeader('Content-Type', 'text/plain');
+    xhr.onreadystatechange = () => {    
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) { 
+          var res = xhr.responseText; 
+          var res1 = JSON.parse(res);
+          dispatch(requestAjax(res1))
+        }
     }
-
-    fetch(url,init)
-      .then(res => {
-          return res.json()
-        })
-      .then( json => { 
-          console.log(JSON.stringify(json));  //得出的值为什么是键
-    });
-   
+    
+    xhr.send(JSON.stringify(obj));  
 }
 
 
@@ -151,12 +125,12 @@ export const requestGet = (request_data) => {
     return { type: REQUEST_GET, request_data}
 }
 
-export const requestPost = (request_data) => {
-    return { type: REQUEST_POST, request_data}
+export const requestPost = (request_post) => {
+    return { type: REQUEST_POST, request_post}
 }
 
-export const requestAjax = (request_data) => {
-    return { type: REQUEST_AJAX, request_data}
+export const requestAjax = (request_ajax) => {
+    return { type: REQUEST_AJAX, request_ajax}
 }
 
 export const fetchDataInGet = data => (dispatch, getState)  => {
@@ -183,11 +157,12 @@ export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {
 //     return requestComments(dispatch);
 // }
 
-
+// state.requestReducer会跟随action.type跟新变化
 // 结合起来，返回一对象
 const rootReducer = combineReducers({
   reducer,
-  requestReducer
+  requestReducer,
+  requestPostReducer
 })
 
 export {requestReducer,rootReducer} 

@@ -28,6 +28,8 @@ inlineCheckEmail(username){
   }
   this.props.dispatch(fetchDataInAjax(obj)); 
   const that = this;
+  // const props = this.props;
+  // console.log(props);
   if(username != '') {
     // let url = '';
     // if(isLocal()){
@@ -131,15 +133,15 @@ login(){
 // 第一次this.props.isShow 默认是false，然后点击再判断有没有cookie，当点击才知道有没有cookie
   render() {
     const props = this.props;
-
+    console.log(props);
     return (
 
     <div className={`container login-container ${this.props.isShowLogin ? 'show' : 'hide'} `}>
         <div className="">用户名</div>
-        <input type="text" autocorrect="off" maxLength="20" name="username" className="user-input" onChange={this.usernameChange.bind(this)} onBlur = {this.validateUsername.bind(this)}/>
+        <input type="text"  maxLength="20" name="username" className="user-input" onChange={this.usernameChange.bind(this)} onBlur = {this.validateUsername.bind(this)}/>
         <div className="">密码</div>
         <input type="password" name="password" maxLength="20" className="user-input" onChange={this.passwordChange.bind(this)} onBlur = {this.validatePassword.bind(this)}/>
-        <div className={`error-msg  ${this.state.isShow ? 'show' : 'hide'} `}>{this.state.error}</div>
+        <div className={`error-msg ${this.state.isShow ? 'show' : 'hide'} `}>{this.state.error}</div>
         <button type="submit" className="button ui-light-btn" onClick={this.login.bind(this)}>登录后发表评论</button>
         
         <div className="centerButton"><a href="http://user.ftchinese.com/register" target="_blank"><button className="ui-light-btn">免费注册</button></a></div>
@@ -149,6 +151,14 @@ login(){
   }
 
 }
+
+const mapStateToProps = (state) => {
+  return {
+    comments: state,
+    request_ajax:state.requestPostReducer
+  }
+}
+
 const mapDispatchToProps = (dispatch, props) => {
   return {
     dispatch
@@ -156,5 +166,6 @@ const mapDispatchToProps = (dispatch, props) => {
 }
 
 export default connect(
+  mapStateToProps,
   mapDispatchToProps
 )(Login)

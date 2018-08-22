@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import {fetchPostsIfNeeded,fetchDataInGet,requestGet} from '../../reducers/question'
+import {fetchDataInGet,requestGet} from '../../reducers/question'
 
 import CommentOne from '../commentOne/commentOne.js'
 
@@ -34,7 +34,7 @@ class CommentList extends Component {
     //  requestData={props.request_data}
  
     const props = this.props.request_data;
-     console.log('request');//为什么会执行2遍？
+     console.log(this.props);//为什么会执行2遍？
     return (
         <div>
          {props.map((comment, i) =>
@@ -52,7 +52,7 @@ class CommentList extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    comments: state,
+    state:state,
     request_data:state.requestReducer
   }
 }

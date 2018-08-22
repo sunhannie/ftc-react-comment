@@ -122,7 +122,7 @@ class CommentOne extends Component {
         <div className="reply-comment">
             <span onClick={this.reply.bind(this)}>回复</span>
             <span onClick={this.support.bind(this)}>{this.state.supportWord}</span>
-            (<font  color="#BA2636">{this.state.supportCount}</font>) 
+            (<font color="#BA2636">{this.state.supportCount}</font>) 
             <span onClick={this.disagree.bind(this)}>{this.state.disagreeWord}</span>
             (<font>{this.state.disagreeCount}</font>)
         </div>
@@ -183,14 +183,13 @@ class CommentOne extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    comments: state,
-    request_data:state.requestReducer
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     comments: state
+//   }
+// }
 
-export default connect(
-  mapStateToProps,
-)(CommentOne)
-// export default CommentOne
+// export default connect(
+//   mapStateToProps,
+// )(CommentOne)
+export default CommentOne

@@ -64,7 +64,7 @@ class CommentReply extends Component {
 const mapStateToProps = (state) => {
   return {
     comments: state,
-    request_data:state.requestReducer
+    request_data:state.requestPostReducer
   }
 }
 
