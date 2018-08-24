@@ -9,13 +9,15 @@ const cleanWebpackPlugin = require("clean-webpack-plugin");
 
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
+// require("babel-polyfill");
+
 module.exports = {
     mode: "development", 
     devtool: 'cheap-module-eval-source-map',
     entry:      
     {
         'index':['./client/index.js','./client/styles/index.scss'], 
-        'signup':['./client/scripts/signup.js'],
+        'signup':['babel-polyfill','./client/scripts/signup.js'],
     },
     output: {
         path: path.resolve(__dirname, 'build/'),  

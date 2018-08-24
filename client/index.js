@@ -20,6 +20,7 @@ const enhancer = compose(
 const store = createStore(rootReducer,
    enhancer);
 
+
 // const store = createStore(
 //   rootReducer,
 //   applyMiddleware(thunk)
