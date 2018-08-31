@@ -13,13 +13,7 @@ class CommentInput extends Component {
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
   }
 
-  componentWillMount () {
-   
-  }
 
-  componentWillUnmount () {
-    
-  }
 
 
   handleTextareaChange (event) {
@@ -34,7 +28,7 @@ class CommentInput extends Component {
 
 
   render () {
-   
+    
     return (
       
       <div className="">

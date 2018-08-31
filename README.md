@@ -24,6 +24,8 @@ reducer可以同时触发，比如触发提交评论可以触发再次请求。�
 
 
 ## 碰到的问题
+1. UglifyJsPlugin
+```
 //    new webpack.optimize.UglifyJsPlugin({           //清除打包后文件中的注释,和copyright信息(webpack4.0版本中已经废弃了UglifyJsPlugin)  Error: webpack.optimize.UglifyJsPlugin has been removed, please use config.optimization.minimize instead.
 //         output: {
 //           comments: false,
@@ -32,3 +34,12 @@ reducer可以同时触发，比如触发提交评论可以触发再次请求。�
 //           warnings: false
 //       }
 //     }),
+```
+2. 生命周期
+/**
+  getDerivedStateFromProps
+  render
+  componentDidMount
+  getDerivedStateFromProps
+  getSnapshotBeforeUpdate
+ */

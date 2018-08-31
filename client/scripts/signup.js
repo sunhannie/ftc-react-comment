@@ -31,55 +31,55 @@ var gen = gen();
 //先yield
 //再{value: undefined, done: true}
 
-var arr = [1, [[2, 3], 4], [5, 6]];
+// var arr = [1, [[2, 3], 4], [5, 6]];
 
-var flat = function* (a) {
-  var length = a.length;
-  for (var i = 0; i < length; i++) {
-    var item = a[i];
-    if (typeof item !== 'number') {
-      yield* flat(item);
-    } else {
-      yield item;
-    }
-  }
-};
-// console.log(flat(arr));  //flat(arr)是得到一遍历器，可以用for of来遍历输出value值
-for (var f of flat(arr)) {
-//   console.log(f); //1,2,3,4,5,6
-}
+// var flat = function* (a) {
+//   var length = a.length;
+//   for (var i = 0; i < length; i++) {
+//     var item = a[i];
+//     if (typeof item !== 'number') {
+//       yield* flat(item);
+//     } else {
+//       yield item;
+//     }
+//   }
+// };
+// // console.log(flat(arr));  //flat(arr)是得到一遍历器，可以用for of来遍历输出value值
+// for (var f of flat(arr)) {
+// //   console.log(f); //1,2,3,4,5,6
+// }
 
 
-function* g() {
-  yield 1;
-  console.log('throwing an exception');
-  throw new Error('generator broke!');
-  yield 2;
-  yield 3;
-}
+// function* g() {
+//   yield 1;
+//   console.log('throwing an exception');
+//   throw new Error('generator broke!');
+//   yield 2;
+//   yield 3;
+// }
 
-function log(generator) {
-  var v;
-  console.log('starting generator');
-  try {
-    v = generator.next();
-    console.log('第一次运行next方法', v);
-  } catch (err) {
-    console.log('捕捉错误', v);
-  }
-  try {
-    v = generator.next();
-    console.log('第二次运行next方法', v);
-  } catch (err) {
-    console.log('捕捉错误', v);
-  }
-  try {
-    v = generator.next();
-    console.log('第三次运行next方法', v);
-  } catch (err) {
-    console.log('捕捉错误', v);
-  }
-  console.log('caller done');
-}
+// function log(generator) {
+//   var v;
+//   console.log('starting generator');
+//   try {
+//     v = generator.next();
+//     console.log('第一次运行next方法', v);
+//   } catch (err) {
+//     console.log('捕捉错误', v);
+//   }
+//   try {
+//     v = generator.next();
+//     console.log('第二次运行next方法', v);
+//   } catch (err) {
+//     console.log('捕捉错误', v);
+//   }
+//   try {
+//     v = generator.next();
+//     console.log('第三次运行next方法', v);
+//   } catch (err) {
+//     console.log('捕捉错误', v);
+//   }
+//   console.log('caller done');
+// }
 
-log(g());
+// log(g());

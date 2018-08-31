@@ -14,12 +14,38 @@ class CommentList extends Component {
   }
 
   componentDidMount () {
+    console.log('componentDidMount');
     this.props.dispatch(fetchDataInGet()); 
     // this._loadComments();
   }
 
+    componentWillMount () {
+    console.log('componentWillMount');
+  }
+
   componentWillUnmount () {
-      
+    console.log('componentWillUnmount');
+  }
+
+  //这里，“不安全”不是指安全性，而是表示使用这些生命周期的代码将更有可能在未来的React版本中存在缺陷，特别是一旦启用了异步渲染。这些不安全都没有执行
+  UNSAFE_componentWillReceiveProps(){
+    console.log('UNSAFE_componentWillReceiveProps');
+  }
+  UNSAFE_componentWillMount(){
+    console.log('UNSAFE_componentWillMount');
+  }
+  UNSAFE_componentWillUpdate(){  
+    console.log('UNSAFE_componentWillUpdate');
+  }
+
+  componentWillUpdate(){
+    console.log('componentWillUpdate');
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps');  //执行2遍
+  }
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('getSnapshotBeforeUpdate'); //执行1遍
   }
    _loadComments () {
       // this.props.initComments();
@@ -33,6 +59,7 @@ class CommentList extends Component {
 
 
   render () {
+    console.log('render');
     const comments = this.props.comments;
     // comments = Array.from(comments);
      console.log(comments);//为什么会执行2遍？
