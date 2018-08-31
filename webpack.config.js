@@ -1,15 +1,14 @@
 var webpack = require('webpack');
 var path = require('path');
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin"); 
+const ExtractTextPlugin = require("extract-text-webpack-plugin");  //将样式文件单独打包，打包输出的文件由配置文件中的output属性指定。然后我们在入口HTML页面写个link标签引入这个打包后的样式文件。(分离CSS)
 
 const HtmlWebpackPlugin = require("html-webpack-plugin"); 
 
 const cleanWebpackPlugin = require("clean-webpack-plugin");
 
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-
-// require("babel-polyfill");
+var UglifyJsPlugin=require('uglifyjs-webpack-plugin');
 
 module.exports = {
     mode: "development", 
@@ -18,6 +17,7 @@ module.exports = {
     {
         'index':['./client/index.js','./client/styles/index.scss'], 
         'signup':['babel-polyfill','./client/scripts/signup.js'],
+        'vendor': ['react', 'react-dom', 'react-router']  //['react', 'react-dom', 'jquery','react-router']单独生成文件vendor.js
     },
     output: {
         path: path.resolve(__dirname, 'build/'),  
@@ -70,7 +70,7 @@ module.exports = {
                 ],
                 // use: [
                 //     {  
-                //         loader: 'style-loader'   // 将 JS 字符串生成为 style 节点
+                //         loader: 'style-loader'   // 将 JS 字符串生成为 style 节点，并自动将css代码放到生成的style标签中插入到head标签里
                 //     },
                 //     {
                 //         loader: 'css-loader',  // 将 CSS 转化成 CommonJS 模块
@@ -84,10 +84,10 @@ module.exports = {
                 //     },
                     
                 // ]
-                use: ExtractTextPlugin.extract({
+                use: ExtractTextPlugin.extract({  //把上面注释的改成下面方式，可以单独打包js文件
                     fallback:"style-loader",
                     use: ["css-loader", "sass-loader"]
-                })
+                })  //ExtractTextPlugin.extract("style-loader", "css-loader!less-loader",{publicPath: './'})   {publicPath: './'} 不是必填项，是 loader 后的 {publicPath: './'} 可以单独设置。
             }
         ]  //end rules    
     },
@@ -106,7 +106,7 @@ module.exports = {
     plugins: [
         // 调用之前先清除
 	//   new cleanWebpackPlugin(["build"]),
-      new ExtractTextPlugin('client/styles/index.css'),  // 分离css插件参数为提取出去的路径
+      new ExtractTextPlugin('client/styles/index.css'),  // 分离css插件参数为提取出去的路径。 打包后在build（为output 设置的path）中生成 client/styles/index.css文件。
 
        new HtmlWebpackPlugin({
            template:'./views/index.html',
@@ -116,10 +116,30 @@ module.exports = {
            inject: 'body',
        }),
        new webpack.HotModuleReplacementPlugin(),//产生hot-update.js文件
-       new OpenBrowserPlugin({ url: 'http://localhost:3000' })
+       new OpenBrowserPlugin({ url: 'http://localhost:3000' }),
+       new webpack.DefinePlugin({    // 把引入的React切换到产品版本
+        'process.env.NODE_ENV': '"production"'
+       })
     ],
     // watch: true ,//这意味着在初始构建之后，webpack将继续监视任何已解析文件的更改。手表模式默认关闭
-    
+     optimization: {   //js压缩
+        minimizer: [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    compress: false
+                }
+            })
+        ],
+        // splitChunks: {  //加入它，会在build下生成一个带有hash值的js文件。
+        //     cacheGroups: {
+        //         commons: {  
+        //             test: /[\\/]node_modules[\\/]/,
+        //             name: "vendors",
+        //             chunks: "all"
+        //         }
+        //     }
+        // }
+    },
 
      devServer: {
         host:'localhost',

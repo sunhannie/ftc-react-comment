@@ -21,3 +21,14 @@ headers:{
 reducer可以同时触发，比如触发提交评论可以触发再次请求。但是当登录的时候怎么能不影响store
 
 下一步需要实现的是在json中插入数据，并且当回复的时候，考虑怎么一级级显示。相对谁是同级。这是一个难题。
+
+
+## 碰到的问题
+//    new webpack.optimize.UglifyJsPlugin({           //清除打包后文件中的注释,和copyright信息(webpack4.0版本中已经废弃了UglifyJsPlugin)  Error: webpack.optimize.UglifyJsPlugin has been removed, please use config.optimization.minimize instead.
+//         output: {
+//           comments: false,
+//         },
+//         compress: {
+//           warnings: false
+//       }
+//     }),
