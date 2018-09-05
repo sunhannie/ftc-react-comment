@@ -49,7 +49,7 @@ const reducer = (state=initialState.users, action) => {
         }
         // return action.request_data
     default:
-        console.log(state);  //为什么执行4此呢？
+        // console.log(state);  //为什么执行4此呢？
         return {
            ...state, 
            isLoading: initialState.isLoading
