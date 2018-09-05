@@ -27,6 +27,10 @@ class CommentOne extends Component {
     this.deleteComment = this.deleteComment.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps one');  //第一次会出现，为什么？
+  }
+  
   componentWillMount () {
     
     const request = this.props.requestData;

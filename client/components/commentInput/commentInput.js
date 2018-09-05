@@ -13,7 +13,9 @@ class CommentInput extends Component {
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
   }
 
-
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps');  //此组件第一次为什么会出现，我觉得是因为添加了react-redux的原因，其它组件props变化了，导致全局props变化，所以此组件也会触发？
+  }
 
 
   handleTextareaChange (event) {

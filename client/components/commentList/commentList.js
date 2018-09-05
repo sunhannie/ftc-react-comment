@@ -16,6 +16,10 @@ class CommentList extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps list');  //第一次会出现，为什么？
+  }
+
   componentDidMount () {
     console.log('componentDidMount');
     this.props.dispatch(fetchDataInGet()); 
@@ -62,7 +66,7 @@ class CommentList extends Component {
     console.log(this.props);//为什么会执行2遍？因为componentDidMount中dispatch的函数，触发了state更新，所以会触发两次。（也就是说第一次进入到页面的时候，因为需要去fetch数据，所以会在没数据的情况下有一次渲染，等fetch成功后，会再一次进行渲染。）第一次this.props.comments为[]，所以开始会闪一下，有空白的情况。怎么让没有闪的情况呢？可以添加isLoading
 
 
-    var commentCom = isLoading ? <Loading/>  : comments.map((comment, i) =>
+    var commentList = isLoading ? <Loading/>  : comments.map((comment, i) =>
         <CommentOne
           requestData={comments[i]}
           key={i}
@@ -72,11 +76,7 @@ class CommentList extends Component {
 
     return (
       <div>
-      {/*{
-        isLoading ? <div>2</div>  : <div>1</div>
-      
-      }*/}
-      {commentCom}
+      {commentList}
       </div>
      
     )
