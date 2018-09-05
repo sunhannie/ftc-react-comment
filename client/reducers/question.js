@@ -19,6 +19,11 @@ const reducer = (state=initialState.users, action) => {
     switch(action.type){
         case ADD_COMMENT:
             return {questions: [...state, action.dataAdded]}
+        case DELETE_COMMENT:
+            return {questions: [
+          ...state.questions.slice(0, action.indexDeleted),
+          ...state.questions.slice(action.indexDeleted + 1)
+        ]}
         case MARK_QUESTION:
             return {mark_question_data:action.mark_question}
         case REQUEST_AJAX:
@@ -34,8 +39,7 @@ const reducer = (state=initialState.users, action) => {
  const requestReducer = (state=initialState.comments, action) => {   
   switch (action.type) {  
     case REQUEST_GET:
-        state=action.request_data;
-      
+        state=action.request_data;    
     //   return {
     //       ...state, 
     //       comments:action.request_data
@@ -131,6 +135,10 @@ function ajax(dispatch,obj) {
 
 export const addComment = (dataAdded) => {
     return { type: ADD_COMMENT, dataAdded}
+}
+// 删除评论，应该怎么更新state，state包含什么呢？隐藏那个标签，按理是更新comment总值的，可以使用一个json对象来仿真
+export const deleteComment = (indexDeleted) => {
+    return { type: DELETE_COMMENT, indexDeleted}
 }
 
 export const requestGet = (request_data) => {
