@@ -18,7 +18,8 @@ class CommentOne extends Component {
     this.state = { 
       comments: '' ,
       supportCount:0,
-      disagreeCount:0
+      disagreeCount:0,
+      isHideComment:false
     }
     // this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
@@ -44,7 +45,10 @@ class CommentOne extends Component {
   }
 
  deleteComment(){
-   console.log('delete');
+   this.setState({
+        isHideComment: true,
+   });
+   this.props.onDeleteComment(this.props.index);
  }
 
   handleTextareaChange (event) {
@@ -104,12 +108,18 @@ handleLogin(){
 }
 
   render () {
+
     const greet = this.Greeting();
     const request = this.props.requestData;
    
     return (
       // 当点击支持时，数量加1
-      <div className="comment-container">
+
+      
+     <div  className={`comment-container ${ this.state.isHideComment ? 'hide' : 'show'} `}  >
+
+      {/*<div className="comment-container">*/}
+        
           <div>
               <div className="ding"></div>
               <span>{request.dnewdate}</span>
@@ -138,6 +148,11 @@ handleLogin(){
         
     </div>
 
+    // {
+    //         this.props.isHide ?
+    //             :
+    //             null
+    //         }
 
   /*逻辑是，评论有1条仅仅是dd中包含一句话，当有2条评论时，在p上加上class并在之前加上cmt_quote，它包含cmt_oldautherinfo；当有3条评论时，在cmt_oldautherinfo前加上*/
     /*<dd>

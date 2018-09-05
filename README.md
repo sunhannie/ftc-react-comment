@@ -49,3 +49,51 @@ reducer可以同时触发，比如触发提交评论可以触发再次请求。�
  添加增删功能
 
  action负责业务逻辑，reducer只负责更新state
+
+```
+ const commentCom = '';
+   
+  if(!this.isEmptyObj(comments)){
+    var comments1 = comments;
+    
+      commentCom = comments1.map((comment, i) =>
+        <CommentOne
+          requestData={comments1[i]}
+          key={i}
+          index={i}
+          onDeleteComment={this.handleDeleteComment.bind(this)} />
+      )
+  }
+```
+
+const comments = this.props.comments;
+
+ <div>
+        {comments.map((comment, i) =>
+        <CommentOne
+          requestData={comments[i]}
+          key={i}
+          index={i}
+          onDeleteComment={this.handleDeleteComment.bind(this)} />
+      )}
+      </div>
+
+
+ export const fetchDataInGet = data => (dispatch, getState)  => {
+      dispatch(requestGet(data))  
+      return fetch('../../client/data/comment.json')
+      .then(response => response.json())
+      .then(json =>{console.log(json);} ) 
+     return requestComments(dispatch);
+ }
+
+  {
+        this.state.isLoading ? <div>2</div>  : comments.map((comment, i) =>
+        <CommentOne
+          requestData={comments[i]}
+          key={i}
+          index={i}
+          onDeleteComment={this.handleDeleteComment.bind(this)} />
+        ) 
+      
+      }

@@ -20,7 +20,7 @@ const enhancer = compose(
 const store = createStore(rootReducer,
    enhancer);
 
-
+store.dispatch({ type: 'DELETE_COMMENT' });
 // const store = createStore(
 //   rootReducer,
 //   applyMiddleware(thunk)
@@ -33,6 +33,7 @@ const store = createStore(rootReducer,
 
 // store.dispatch(fetchDataInGet());  
 ReactDOM.render(
+  
   <Provider store={store}>
   <App/>
   </Provider>,

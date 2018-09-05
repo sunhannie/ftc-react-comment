@@ -9,7 +9,8 @@ import {SetCookie,isLocal} from '../../util/api'
 
 const initialState = {
   comments: [],
-  users: {}
+  users: {},
+  isLoading:true
 }
 
 const reducer = (state=initialState.users, action) => {
@@ -21,8 +22,9 @@ const reducer = (state=initialState.users, action) => {
             return {questions: [...state, action.dataAdded]}
         case DELETE_COMMENT:
             return {questions: [
-          ...state.questions.slice(0, action.indexDeleted),
-          ...state.questions.slice(action.indexDeleted + 1)
+                1,2
+        //   ...state.questions.slice(0, action.indexDeleted),
+        //   ...state.questions.slice(action.indexDeleted + 1)
         ]}
         case MARK_QUESTION:
             return {mark_question_data:action.mark_question}
@@ -36,20 +38,23 @@ const reducer = (state=initialState.users, action) => {
 }
 
 
- const requestReducer = (state=initialState.comments, action) => {   
+ const requestReducer = (state=[], action) => {   
   switch (action.type) {  
     case REQUEST_GET:
         state=action.request_data;    
-    //   return {
-    //       ...state, 
-    //       comments:action.request_data
-    //     }
-        return action.request_data
+        return {
+          ...state, 
+          comments:action.request_data,
+          isLoading:false
+        }
+        // return action.request_data
     default:
-        // initialState = state;
-    //   console.log(state);  //数组就可以，默认的state值会用上次的state值
-      return state 
-        //为什么不能返回initialState
+        console.log(state);  //为什么执行4此呢？
+        return {
+           ...state, 
+           isLoading: initialState.isLoading
+        }  
+    //   return state     //   console.log(state);  //数组就可以，默认的state值会用上次的state值
   }
 }
 
@@ -168,14 +173,6 @@ export const fetchDataInAjax = data => (dispatch, getState)  => {
 export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {
     return dispatch(fetchDataInGet(subreddit))   
 }
-
-// export const fetchDataInGet = data => (dispatch, getState)  => {
-//     // dispatch(requestGet(data))  
-//     // return fetch('../../client/data/comment.json')
-//     // .then(response => response.json())
-//     // .then(json =>{console.log(json);} ) 
-//     return requestComments(dispatch);
-// }
 
 // state.requestReducer会跟随action.type跟新变化
 // 结合起来，返回一对象
