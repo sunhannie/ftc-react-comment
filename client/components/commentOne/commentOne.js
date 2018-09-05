@@ -23,6 +23,7 @@ class CommentOne extends Component {
     // this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
     // console.log(this.props);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   componentWillMount () {
@@ -42,7 +43,9 @@ class CommentOne extends Component {
     
   }
 
-
+ deleteComment(){
+   console.log('delete');
+ }
 
   handleTextareaChange (event) {
     this.setState({
@@ -123,6 +126,7 @@ handleLogin(){
 
         <Login isShowLogin={this.state.isShowLogin} handleLogin={this.handleLogin.bind(this)}/>
         
+        <div className="delete-comment" onClick={this.deleteComment}>删除</div>
         <div className="reply-comment">
             <span onClick={this.reply.bind(this)}>回复</span>
             <span onClick={this.support.bind(this)}>{this.state.supportWord}</span>

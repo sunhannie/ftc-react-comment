@@ -1,4 +1,5 @@
 const ADD_COMMENT = 'ADD_COMMENT';
+const DELETE_COMMENT = 'DELETE_COMMENT';
 const MARK_QUESTION = 'MARK_QUESTION';
 const REQUEST_GET = 'REQUEST_GET';
 const REQUEST_POST = 'REQUEST_POST';
@@ -24,9 +25,7 @@ const reducer = (state=initialState.users, action) => {
             return { ...state,
                 users: action.request_ajax
             }
-            // return action.request_ajax
         default:
-        //    let defaultState = {comments: 'default data'}; 
             return {...state}
     }
 }
