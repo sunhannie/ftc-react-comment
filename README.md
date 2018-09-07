@@ -4,7 +4,7 @@ it is a component to comment with react-reduct and react
 评论返回的是一个json数据。
 
 # 数据来源
-此登录用户名和账号检测是来自于 https://github.com/sunhannie/cross-domain.git 创建的serverPost.js，它是一种跨域的实践。
+此登录用户名和账号检测是来自于 跨域实例 创建的serverPost.js，它是一种跨域的实践。
 
 评论数据：来自于本地json文件。
 
