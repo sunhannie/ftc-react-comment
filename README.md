@@ -27,6 +27,20 @@ it is a component to comment with react-reduct and react
       }
     }),
 ```
+
+3. HtmlWebpackPlugin
+```
+如果使用了HtmlWebpackPlugin
+new HtmlWebpackPlugin({
+    template:'./views/index.html',
+    filename:'index.html',
+    title:'测试',
+    chunks:['index'],
+    inject: 'body',
+})
+```
+就不需要在index中引入<script type="text/javascript" src="index.js"></script>
+
 ## 生命周期
 /**
   getDerivedStateFromProps
@@ -83,3 +97,5 @@ redux数据流管理思路，需要确定好几个reducer，每个reducer之间�
 2. 微信登录功能
 3. 导航栏功能
 4. 表格接口功能（请求一组数据，显示出来，可以使用闭包等新技术）
+
+https://github.com/react-component/table
